@@ -11,6 +11,6 @@ app.listen(process.env.PORT||3000,()=>{
     console.log(`Running on port ${process.env.PORT || 3000}`);
 })
 
-app.post("/sendData",(req,res)=>{
+app.post("/",(req,res)=>{
     console.log(req);
 })
