@@ -14,10 +14,10 @@ app.use('/', function(req, res, next){
     next(); 
 })
 
-app.post("/",(req,res)=>{
+app.post("/sendData",(req,res)=>{
     let body = JSON.stringify(req.body);
-    let param = JSON.stringify(req.params);
-    console.log(`Request object is: ${body}, ${param}`);
+    console.log(`Request object is: ${body}`);
+
 })
 
 app.listen(process.env.PORT||3000,()=>{
