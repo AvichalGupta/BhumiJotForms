@@ -12,7 +12,5 @@ app.listen(process.env.PORT||3000,()=>{
 })
 
 app.post("/",(req,res)=>{
-    console.log(`Request object is: ${req}`);
-    console.log(`Response object is: ${res}`);
-    res.render("<h1>Details recieved.</h1>");
+    console.log(`Request object is: ${req.body}, ${req.params}`);
 })
