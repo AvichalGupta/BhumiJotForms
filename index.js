@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const endpoint = config.get("OPT_IN_API");
 const { OPT_IN_API, sendMessageAPI } = require("./config");
 
 app.use(express.json());
@@ -19,7 +18,6 @@ app.use('/', function(req, res, next){
 app.post("/sendData",(req,res)=>{
     let body = JSON.stringify(req.body);
     console.log(`Request object is: ${body}`);
-    console.log("endpoint is: ",endpoint);
     console.log("sendMessageAPI is: ",sendMessageAPI);
     console.log("OPT_IN_API is: ",OPT_IN_API);
 })

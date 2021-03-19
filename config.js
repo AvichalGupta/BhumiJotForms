@@ -1,6 +1,6 @@
 require("dotenv").config()
 const id = 2000194659;
-const password = htPtqTeC;
+const password = "htPtqTeC";
 const phone_num = 919999999999;
 // const id = process.env.id;
 // const password = process.env.password;
