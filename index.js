@@ -3,7 +3,7 @@ const app = express();
 const { OPT_IN_API, sendMessageAPI } = require("./config");
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
 
 app.get("/",(req,res)=>{
     res.sendFile(`${__dirname}/index.html`)
