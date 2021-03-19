@@ -1,18 +1,11 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
-const { OPT_IN_API, sendMessageAPI } = require("./config");
-
-const fetchData = {
-    method:"OPT_IN",
-    format:"json",
-    userid: 2000194659,
-    password: "htPtqTeC",
-    phone_number: 919777777778,
-    v:1.1,
-    auth_schema:"plain",
-    channel:"WHATSAPP"
-}
+require("dotenv").config()
+const id = process.env.id;
+const password = process.env.password;
+const message = "Greeting thanks you for submmiting the form";
+const encodedMsg = encodeURI(message);
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -27,36 +20,91 @@ app.use('/', function(req, res, next){
     next(); 
 })
 
-app.post("/sendData",async (req,res)=>{
-    // let body = JSON.stringify(req.body);
-    // console.log(`Request object is: ${body}`);
-    // console.log("sendMessageAPI is: ",sendMessageAPI);
-    console.log("OPT_IN_API is: ",OPT_IN_API);
-    // console.log("OPT_IN_API data is: ",fetchData);
-    const {name,phonenumber,email,permissionto} = req.body;
-    // console.log(`Name: ${name}, Email:${email}, Phone:${phonenumber}, OptedIn:${permissionto}`);
-    if(permissionto==="Yes"){
-        try {
-            const fetchResponse = await fetch(OPT_IN_API
-                ,{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/x-www-form-urlencoded"
-                },
-                body:JSON.stringify(fetchData)
+async function optInFunction(url){
+    try {
+        //DO NOT change the method or the header mentioned below.
+        const fetchResponse = await fetch(url,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
             }
-            )
-            console.log(`Result of first API is: ${JSON.stringify(fetchResponse)}`)
-            // return fetchResponse.json()
-        }catch(err){
-            console.log(`Error in first API is: ${JSON.stringify(err)}`);
+        })
+        // //Uncomment and re-run to view errors in fetch request. 
+        //console.log("responseData: ",responseData);
+
+        // the response will be a json if everything goes smoothly.
+        const responseData = await fetchResponse.json();
+
+        //Uncomment to check response behaviour
+        // console.log("responseData is: ",JSON.stringify(responseData));
+        // console.log("responseData is: ",JSON.stringify(responseData.data));
+
+        //check implemented for unique user mobile number.
+        switch(responseData.id){
+            case 100: console.log("Internal Server Error from Gupshup.");
+            break;
+            case 101: console.log(responseData.details);
+            break;
+            case 102: console.log("Invalid credentials");
+            break;
+            case 103: console.log(responseData.details);
+            break;
+            case 105: console.log(responseData.details);
+            break;
+            case 106: console.log("Invalid parameter values in URL");
+            break;
+            case 175: console.log(responseData.details);
+            break;
+            default:if(responseData.data.response_messages[0].status==="success"){
+                        return true;
+                    }else{
+                        return false;
+                    }
+            break;
+        }        
+    }catch(err){
+        console.log(`Error in first API is: ${err}`);
+    }
+}
+async function sendMessageFunction(url){
+    try {
+        const fetchResponse = await fetch(url,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            }
+        })
+        const responseData = await fetchResponse.json();
+        console.log("responseData: ",JSON.stringify(responseData));
+        // if(responseData.data.response_messages[0].status==="success"){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+    }catch(err){
+        console.log(`Error in first API is: ${err}`);
+    }
+}
+
+app.post("/sendData",async (req,res)=>{
+    // DO NOT change the keys names.
+    const {name,email,phonenumber9,permissionto} = req.body;
+    const phoneArr = phonenumber9.split(" ");
+    const countryCode = phoneArr[0].split("+");
+    const phone_num = countryCode[1]+phoneArr[1];
+    const OPT_IN_API = `https://media.smsgupshup.com/GatewayAPI/rest?method=OPT_IN&format=json&userid=${id}&password=${password}&phone_number=${phone_num}&v=1.1&auth_scheme=plain&channel=WHATSAPP`;
+    const sendMessageAPI = `https://media.smsgupshup.com/GatewayAPI/rest?method=SendMessage&format=json&userid=${id}&password=${password}&send_to=${phone_num}&v=1.1&auth_scheme=plain&msg_type=HSM&msg=${encodedMsg}`;
+    
+    // This condition checks if the user has chosen "YES" in the permission to contact option of the form.
+    if(permissionto==="Yes"){
+        const optedIn = await optInFunction(OPT_IN_API);
+        if(optedIn){
+            // sendMessageFunction(sendMessageAPI);
+        }else{
+            console.log("User has already opted-in");
         }
-        // .then((response)=>{
-        //     console.log(`Result of first API is: ${JSON.stringify(response)}`);
-        //     // return response.json();
-        // }).catch((err)=>{
-        //     console.log(`Error in first API is: ${JSON.stringify(err)}`);
-        // })
+    }else{
+        console.log("User has chosen not to opt-in");
     }
 })
 
