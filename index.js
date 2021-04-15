@@ -30,14 +30,14 @@ async function optInFunction(url){
             }
         })
         //Uncomment and re-run to view errors in fetch request. 
-        //console.log("responseData: ",responseData);
+        console.log("responseData: ",responseData);
 
         // the response will be a json if everything goes smoothly.
         const responseData = await fetchResponse.json();
 
         //Uncomment to check response behaviour
-        // console.log("responseData is: ",JSON.stringify(responseData));
-        // console.log("responseData is: ",JSON.stringify(responseData.data));
+        console.log("responseData is: ",JSON.stringify(responseData));
+        console.log("responseData is: ",JSON.stringify(responseData.data));
 
         //check implemented for unique user mobile number.
         switch(responseData.id){
@@ -55,11 +55,12 @@ async function optInFunction(url){
             break;
             case 175: console.log(responseData.details);
             break;
-            default:if(responseData.data.response_messages[0].status==="success"){
-                        return true;
-                    }else{
-                        return false;
-                    }
+            default: console.log("Oops")
+                // if(responseData.data.response_messages[0].status==="success"){
+                //         return true;
+                //     }else{
+                //         return false;
+                //     }
             break;
         }        
     }catch(err){
