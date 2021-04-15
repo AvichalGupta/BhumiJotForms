@@ -35,13 +35,13 @@ async function optInFunction(url){
         
         //Uncomment and re-run to view errors in fetch request. 
         console.log("responseData: ",responseData);
-        
+
         //Uncomment to check response behaviour
         console.log("responseData is: ",JSON.stringify(responseData));
         console.log("responseData is: ",JSON.stringify(responseData.data));
 
         //check implemented for unique user mobile number.
-        switch(responseData.id){
+        switch(responseData.response.id){
             case 100: console.log("Internal Server Error from Gupshup.");
             break;
             case 101: console.log(responseData.details);
