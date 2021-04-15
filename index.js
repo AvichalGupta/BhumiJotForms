@@ -29,12 +29,13 @@ async function optInFunction(url){
                 "Content-Type":"application/x-www-form-urlencoded"
             }
         })
-        //Uncomment and re-run to view errors in fetch request. 
-        console.log("responseData: ",responseData);
-
+        
         // the response will be a json if everything goes smoothly.
         const responseData = await fetchResponse.json();
-
+        
+        //Uncomment and re-run to view errors in fetch request. 
+        console.log("responseData: ",responseData);
+        
         //Uncomment to check response behaviour
         console.log("responseData is: ",JSON.stringify(responseData));
         console.log("responseData is: ",JSON.stringify(responseData.data));
