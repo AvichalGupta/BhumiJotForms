@@ -29,7 +29,7 @@ async function optInFunction(url){
                 "Content-Type":"application/x-www-form-urlencoded"
             }
         })
-        // //Uncomment and re-run to view errors in fetch request. 
+        //Uncomment and re-run to view errors in fetch request. 
         //console.log("responseData: ",responseData);
 
         // the response will be a json if everything goes smoothly.
@@ -99,7 +99,7 @@ app.post("/sendData",async (req,res)=>{
     if(permissionto==="Yes"){
         const optedIn = await optInFunction(OPT_IN_API);
         if(optedIn){
-            // sendMessageFunction(sendMessageAPI);
+            sendMessageFunction(sendMessageAPI);
         }else{
             console.log("User has already opted-in");
         }
