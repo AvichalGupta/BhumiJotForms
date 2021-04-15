@@ -42,19 +42,19 @@ async function optInFunction(url){
 
         //check implemented for unique user mobile number.
         switch(responseData.response.id){
-            case 100: console.log("Internal Server Error from Gupshup.");
+            case "100": console.log("Internal Server Error from Gupshup.");
             break;
-            case 101: console.log(responseData.details);
+            case "101": console.log(responseData.details);
             break;
-            case 102: console.log("Invalid credentials");
+            case "102": console.log("Invalid credentials");
             break;
-            case 103: console.log(responseData.details);
+            case "103": console.log(responseData.details);
             break;
-            case 105: console.log(responseData.details);
+            case "105": console.log(responseData.details);
             break;
-            case 106: console.log("Invalid parameter values in URL");
+            case "106": console.log("Invalid parameter values in URL");
             break;
-            case 175: console.log(responseData.details);
+            case "175": console.log(responseData.details);
             break;
             default: console.log("Oops")
                 // if(responseData.data.response_messages[0].status==="success"){
