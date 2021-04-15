@@ -82,7 +82,7 @@ async function sendMessageFunction(url){
         //     return false;
         // }
     }catch(err){
-        console.log(`Error in first API is: ${err}`);
+        console.log(`Error in second API is: ${err}`);
     }
 }
 
@@ -102,6 +102,7 @@ app.post("/sendData",async (req,res)=>{
             sendMessageFunction(sendMessageAPI);
         }else{
             console.log("User has already opted-in");
+            sendMessageFunction(sendMessageAPI);
         }
     }else{
         console.log("User has chosen not to opt-in");
