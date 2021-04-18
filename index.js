@@ -4,7 +4,12 @@ const fetch = require("node-fetch");
 require("dotenv").config()
 const id = process.env.id;
 const password = process.env.password;
-const message = "Greeting thanks you for submmiting the form";
+const message = `Thank you for choosing to volunteer with Bhumi. Our volunteers form the heartbeat of Bhumi.   
+
+There are many ways in which you can get involved and ensure that our efforts move forward. However, you can start by choosing to volunteer
+
+- for the education of children through Ignite. You will have to attend a mandatory orientation.
+- for any of the civic initiatives through Catalyse. Sign up through one of the emails you will receive.`;
 const encodedMsg = encodeURI(message);
 
 app.use(express.json());
