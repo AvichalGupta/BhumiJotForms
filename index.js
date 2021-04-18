@@ -39,10 +39,10 @@ async function optInFunction(url){
         const responseData = await fetchResponse.json();
         
         //Uncomment and re-run to view errors in fetch request. 
-        // console.log("responseData: ",responseData);
+        console.log("responseData: ",responseData);
 
         //Uncomment to check response behaviour
-        // console.log("responseData is: ",JSON.stringify(responseData));
+        console.log("responseData is: ",JSON.stringify(responseData));
         // console.log("responseData is: ",JSON.stringify(responseData.data));
 
         //check implemented for unique user mobile number.
@@ -61,12 +61,13 @@ async function optInFunction(url){
             break;
             case "175": console.log(responseData.details);
             break;
-            default: console.log("Invalid response")
-                // if(responseData.data.response_messages[0].status==="success"){
-                //         return true;
-                //     }else{
-                //         return false;
-                //     }
+            default: 
+            if(responseData.data.response_messages[0].status==="success"){
+                return true;
+            }else{
+                return false;
+            }
+            // console.log("Invalid response")
             break;
         }        
     }catch(err){
