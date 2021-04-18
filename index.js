@@ -102,7 +102,8 @@ app.post("/sendData",async (req,res)=>{
     const phone_num = countryCode[1]+phoneArr[1];
     const OPT_IN_API = `https://media.smsgupshup.com/GatewayAPI/rest?method=OPT_IN&format=json&userid=${id}&password=${password}&phone_number=${phone_num}&v=1.1&auth_scheme=plain&channel=WHATSAPP`;
     const sendMessageAPI = `https://media.smsgupshup.com/GatewayAPI/rest?method=SendMessage&format=json&userid=${id}&password=${password}&send_to=${phone_num}&v=1.1&auth_scheme=plain&msg_type=HSM&msg=${encodedMsg}`;
-    
+    console.group("Encoded message is: ",encodedMsg)
+
     // This condition checks if the user has chosen "YES" in the permission to contact option of the form.
     if(permissionto==="Yes"){
         const optedIn = await optInFunction(OPT_IN_API);
